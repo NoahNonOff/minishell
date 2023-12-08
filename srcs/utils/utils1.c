@@ -1,0 +1,68 @@
+#include "utils.h"
+
+void	m_putstr(const char *str, int fd)
+{
+	write(fd, str, m_strlen(str));
+}
+
+int	m_strlen(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s && s[i])
+		i++;
+	return (i);
+}
+
+char	**m_duplicateTab(const char **tab)
+{
+	int		i;
+	char	**new_tab;
+
+	i = 0;
+	if (!tab)
+		return (NULL);
+	while (tab[i])
+		i++;
+	new_tab = malloc(sizeof(char *) * (i + 1));
+	if (!new_tab)
+		return (NULL);
+	i = -1;
+	while (tab[++i])
+	{
+		new_tab[i] = m_strdup(tab[i]);
+		if (!new_tab[i])
+			return (m_freeTab(new_tab));
+	}
+	new_tab[i] = NULL;
+	return (new_tab);
+}
+
+void	*m_freeTab(char **tab)
+{
+	int	i;
+
+	i = -1;
+	while (tab && tab[++i])
+		free(tab[i]);
+	free(tab);
+	return (NULL);
+}
+
+char	*m_strdup(const char *s)
+{
+	int		i;
+	char	*dest;
+
+	i = -1;
+	if (!s)
+		return (NULL);
+	dest = malloc(sizeof(char) * (m_strlen(s) + 1));
+	if (!dest)
+		return (NULL);
+	while (s[++i])
+		dest[i] = s[i];
+	dest[i] = 0;
+	return (dest);
+}

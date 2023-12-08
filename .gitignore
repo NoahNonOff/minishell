@@ -1,0 +1,4 @@
+# exclude object file
+*.o
+# exclude binary
+minishell
