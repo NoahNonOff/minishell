@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nbeaufil <nbeaufil@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/07 10:16:47 by abougy            #+#    #+#             */
-/*   Updated: 2023/12/08 16:17:39 by nbeaufil         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -67,5 +55,10 @@ typedef struct s_shell
 }	t_shell;
 
 /* ===================== proto ===================== */
+
+// linked list
+void		*free_list(t_parse *ptr, int option);
+t_parse		*add_parse(t_parse *begin, t_red *red, char **cmd);
+void		assign_pipe_type(t_parse *parse);
 
 #endif

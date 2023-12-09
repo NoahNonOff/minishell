@@ -1,34 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   linked_list.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nbeaufil <nbeaufil@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/07 10:19:34 by abougy            #+#    #+#             */
-/*   Updated: 2023/12/07 16:47:23 by nbeaufil         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "ra_shell.h"
-
-t_parse	*new_node(t_red *red, char **cmd)
-{
-	int		cmd_size;
-	t_parse	*new_node;
-
-	cmd_size = 0;
-	new_node = _calloc(sizeof(t_parse));
-	if (!new_node)
-		return (NULL);
-	while (cmd && cmd[cmd_size])
-		cmd_size++;
-	new_node->pipe_type = 0;
-	new_node->list_size = cmd_size;
-	new_node->red = red;
-	new_node->cmd = cmd;
-	new_node->next = NULL;
-}
 
 void	*free_list(t_parse *ptr, int option)
 {
@@ -42,20 +12,27 @@ void	*free_list(t_parse *ptr, int option)
 		free(ptr);
 		ptr = tmp;
 	}
-	if (1 == option)
-		write(2, "error: failed during allocation\n", 32);
+	if (option)
+		m_putstr("error: failed during allocation\n", 2);
 	return (NULL);
 }
 
-// 0 -> first / -1 -> last / n -> n in the list
-t_parse	*give_at(t_parse *begin, int pos)
+static t_parse	*new_node(t_red *red, char **cmd)
 {
-	int	i;
+	int		cmd_size;
+	t_parse	*new_node;
 
-	i = 0;
-	while (begin && (-1 == pos || i < pos))
-		begin = begin->next;
-	return (begin);
+	cmd_size = 0;
+	new_node = malloc(sizeof(t_parse));
+	if (!new_node)
+		return (NULL);
+	while (cmd && cmd[cmd_size])
+		cmd_size++;
+	new_node->pipe_type = 0;
+	new_node->list_size = cmd_size;
+	new_node->red = red;
+	new_node->cmd = cmd;
+	new_node->next = NULL;
 }
 
 t_parse	*add_parse(t_parse *begin, t_red *red, char **cmd)
@@ -90,34 +67,3 @@ void	assign_pipe_type(t_parse *parse)
 		parse = parse->next;
 	}
 }
-
-
-// to remove
-/* 
-void	print_address()
-{
-	while (ptr)
-	{
-		printf("cmd 1\n");
-		// print tokens
-		for (int i = 0; ll->cmds && ll->cmds[i]; i++)
-			printf("[%s] ", ll->cmds[i]);
-		printf("\nredirection:");
-		// print red
-		for (int i = 0; i < 4; i++)
-		{
-			printf("\nred[%d]", i);
-			char	**tab = (char **)(&ll->red) + (sizeof(char **) + i);
-			if (!tab)
-			{
-				printf("NULL")
-				break ;
-			}
-			for (int j = 0; tab[j]; j++)
-				printf("[%s] ", tab[j]);
-			printf("\n");
-		}
-		ptr = ptr->next;
-	}
-}
-*/

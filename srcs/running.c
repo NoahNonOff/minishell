@@ -1,6 +1,9 @@
 #include "minishell.h"
 
-bool	parse_check(char *prompt);
+bool		parse_check(char *prompt);
+t_parse		*parse(t_shell *data);
+
+/* ----------------------------------------- */
 
 static int	prompt_check(t_shell *data)
 {
@@ -21,15 +24,17 @@ static int	prompt_check(t_shell *data)
 
 int	running(t_shell *data)
 {
-	// t_parse	*parse;
+	t_parse	*parse;
 
 	if (prompt_check(data))
 		return (0);
 	add_history(data->prompt);
 	if (!parse_check(data->prompt))
 		return (0);
+	parse = parse(data);
 
 	printf("%s\n", data->prompt);
+	free_list(parse, 0);
 	free(data->prompt);
 	return (0);
 }

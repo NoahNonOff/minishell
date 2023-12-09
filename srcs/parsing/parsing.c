@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nbeaufil <nbeaufil@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/07 10:19:43 by abougy            #+#    #+#             */
-/*   Updated: 2023/12/08 16:15:37 by nbeaufil         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 static bool	error_in_parsing(t_red *red, char **cmd)
@@ -23,7 +11,16 @@ static bool	error_in_parsing(t_red *red, char **cmd)
 	return (false);
 }
 
-t_parse	*parse(t_prompt *data, char *ret_value)
+static bool	t_redInit(t_red **red)
+{
+	if (!red)
+		return (false);
+	*red = malloc(sizeof(t_red));
+	if (!(*red))
+		return (false);
+}
+
+t_parse	*parse(t_shell *data)
 {
 	int		pos;
 	char	**cmd;
@@ -37,7 +34,7 @@ t_parse	*parse(t_prompt *data, char *ret_value)
 		red = NULL;
 		cmd = extract_cmd(data, &pos, &red);
 		if (error_in_parsing(red, cmd))
-			return (free_list(begin, 0));
+			return (free_list(begin, 1));
 		parse = add_parse(parse, red, cmd);
 	}
 	return (parse);
@@ -45,7 +42,8 @@ t_parse	*parse(t_prompt *data, char *ret_value)
 
 char	**extract_cmd(t_prompt *data, int *pos, t_red **red)
 {
-	*t_red = redirection_init();
+	if (!t_redInit(red))
+		return (NULL);
 }
 
 /*
