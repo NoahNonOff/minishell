@@ -19,6 +19,8 @@
 #  define BUFFER_SIZE 30
 # endif
 
+# define TOKEN_MAX_SZ 508
+
 # ifndef _BOOL_
 #  define _BOOL_
 
@@ -52,6 +54,7 @@ typedef struct s_shell
 {
 	char	*prompt;
 	char	**env;
+	int		ret_value;
 }	t_shell;
 
 /* ===================== proto ===================== */

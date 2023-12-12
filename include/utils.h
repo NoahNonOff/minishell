@@ -17,7 +17,13 @@ char	**m_duplicateTab(char **tab);
 
 // utils 2
 int		m_isWhitespace(char c);
+void	m_bzero(void *s, int n);
 char	**m_endtabPush(char **tab, const char *to_add);
 char	*m_strncpy(char *dest, char *src, int n);
+int		m_strncmp(const char *s1, const char *s2, int n);
+
+// utils 3
+char	*m_itoa(int n);
+char	**m_split(char const *s, char c);
 
 #endif

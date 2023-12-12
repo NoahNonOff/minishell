@@ -1,6 +1,7 @@
 #include "minishell.h"
 
 int		running(t_shell *data);
+/* ----------------------------------------- */
 
 void	handle_signal(int signo)
 {
@@ -18,6 +19,7 @@ static void	init_data(t_shell *data, char *env[])
 	data->env = m_duplicateTab(env);
 	if (!data->env)
 		exit (1);
+	data->ret_value = 0;
 }
 
 static void	end_prog(t_shell *data)

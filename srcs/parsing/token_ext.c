@@ -1,61 +1,21 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   token_ext.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nbeaufil <nbeaufil@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/07 10:19:57 by abougy            #+#    #+#             */
-/*   Updated: 2023/12/09 14:40:15 by nbeaufil         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "minishell.h"
 
-#include "ra_shell.h"
-
-char	*add_str(char *src, char *str)
+char	*find_var(char **env, char *token, int len)
 {
 	int		i;
 	char	*ret;
+	char	**split_env;
 
 	i = -1;
-	if (!src)
-		return (_strdup(str));
-	ret = _calloc(sizeof(char), _strlen(src) + _strlen(str) + 1);
-	if (!ret)
-		return (NULL);
-	while (scr[++i])
-		ret[i] = src[i];
-	i = -1;
-	while (str[++i])
-		ret[_strlen(src) + i] = src[i];
-	ret[_strlen(src) + _strlen(str)] = 0;
-	free(src);
-	return (ret);
-}
-
-char	*add_char(char *src, char c)
-{
-	char	*ret;
-	int		len;
-	int		i;
-
-	i = -1;
-	len = _strlen(src);
-	ret = _calloc(sizeof(char), len + 2);
-	if (!ret)
-		return (NULL);
-	while (scr[++i])
-		ret[i] = src[i];
-	ret[i] = c;
-	ret[i + 1] = 0;
-	free(src);
-	return (ret);
-}
-
-// echo $?trt -> 0trt
-// echo $PATHtrt -> 
-char	*replace_env(char *ret, t_prompt data, char *str, int *pos)
-{
-	// to do
+	ret = NULL;
+	while (!ret && env && env[++i])
+	{
+		split_env = m_split(env[i], '=');
+		if (!split_env)
+			return (NULL);
+		if (!m_strncmp(split_env[0], token, len))
+			ret = m_strdup(split_env[1]);
+		m_freeTab(split_env);
+	}
 	return (ret);
 }

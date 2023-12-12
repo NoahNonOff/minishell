@@ -1,12 +1,22 @@
 #include "minishell.h"
 
+typedef struct s_var
+{
+	int		idx;
+	char	edge;
+	char	new_token[TOKEN_MAX_SZ];
+}	t_var;
+
+char	*manage_var(t_shell *data, char	*token);
+char	*find_var(char **env, char *token, int len);
+/* ----------------------------------------- */
+
 static char	modified_edge(char edge, char c)
 {
 	if (edge == c)
 		return (' ');
 	return (c);
 }
-
 
 char	*extract_token(char *prompt, int *pos)
 {
@@ -35,61 +45,61 @@ char	*extract_token(char *prompt, int *pos)
 	return (token);
 }
 
-/*
-static int	find_red_type(char *str, int pos)
+bool	modified_token(t_shell *data, char **token, t_red **red)
 {
-	if (str[pos + 1] == '>')
-		return (4);
-	else if (str[pos + 1] == '<')
-		return (2);
-	else if (str[pos] == '>')
-		return (3);
-	else if (str[pos] == '<')
-		return (1);
-	return (0);
+	char	*str;
+
+	(void)red;
+	str = manage_var(data, *token);
+	free(*token);
+	if (!str)
+		return (false);
+	// modified for remove red (< | >)
+	*token = str;
+	return (true);
 }
 
-char	*modified_token(t_prompt data, char *token, t_red **red)
+static int	get_var_name(t_shell *data, t_var *var, char *token)
 {
-	int		pos;
-	char	*ret;
-	char	edge;
-
-	pos = 0;
-	ret = NULL;
-	edge = ' ';
-	while (token && token[pos])
-	{
-		if (token[pos] == '\"' || token[pos] == '\'')
-			edge = modified_edge(edge, token[pos]);
-		else if (token[pos] == '$' && edge != '\'')
-			ret = replace_env(ret, data, token, &pos);
-		else if (edge == ' ' && (token[pos] == '>' || token[pos] == '<'))
-			extract_red(red, token, &pos);
-		else
-			ret = add_char(ret, token[pos++]);
-	}
-	return (ret);
-}
-
-// echo test >test"alpha" -> file_name = testalpha
-void	extract_red(t_red **red, char *str, int *pos)
-{
-	char	edge;
 	int		len;
-	int		red_type;
-	char	buff[BUFFER_SIZE];
+	char	*replace;
 
-	_bzero((void *)&buff[0], BUFFER_SIZE);
-	red_type = find_red_type(str, *pos);
-	if (red_type == 4 || red_type == 2)
-		(*pos)++;
-	while (str[*pos + len])
+	len = 0;
+	if (token[1] != '?')
+		while ((token && token[++len]))
+			if (token[len] == ' ' || token[len] == '\'' || token[len] == '\"')
+				break ;
+	if (len == 0 && token[1] == '?')
 	{
-		if (str[*pos + len] == )
-		buff[len] = str[*pos + len];
-		len++;
+		replace = m_itoa(data->ret_value);
+		len = 2;
 	}
-	// tab = _endtab_push(tab, buff);
+	else
+		replace = find_var(data->env, &token[1], len);
+	if (!replace)
+		return (len - 1);
+	m_strncpy(&var->new_token[var->idx], replace, m_strlen(replace));
+	var->idx += m_strlen(replace);
+	free(replace);
+	return (len - 1);
 }
-*/
+
+char	*manage_var(t_shell *data, char	*token)
+{
+	int		i;
+	t_var	var;
+
+	m_bzero(&var, sizeof(t_var));
+	var.edge = ' ';
+	i = -1;
+	while (token[++i] && var.idx < TOKEN_MAX_SZ)
+	{
+		if (token[i] == '\"' || token[i] == '\'')
+			var.edge = modified_edge(var.edge, token[i]);
+		if (token[i] == '$' && var.edge != '\'' && token[i + 1])
+			i += get_var_name(data, &var, &token[i]);
+		else
+			var.new_token[var.idx++] = token[i];
+	}
+	return (m_strdup(var.new_token));
+}
