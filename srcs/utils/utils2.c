@@ -2,12 +2,10 @@
 
 int	m_isWhitespace(char c)
 {
-	if ((c >= 9 && c <= 13) || c == ' ')
-		return (0);
-	return (1);
+	return ((c >= 9 && c <= 13) || c == ' ');
 }
 
-char	**m_endtabPush(const char **tab, const char *to_add)
+char	**m_endtabPush(char **tab, const char *to_add)
 {
 	int		len;
 	char	**ret;
@@ -31,4 +29,17 @@ char	**m_endtabPush(const char **tab, const char *to_add)
 	if (tab)
 		free(tab);
 	return (ret);
+}
+
+char	*m_strncpy(char *dest, char *src, int n)
+{
+	int	i;
+
+	i = -1;
+	if (!dest || !src)
+		return (NULL);
+	while (++i < n && src[i])
+		dest[i] = src[i];
+	dest[n] = 0;
+	return (dest);
 }

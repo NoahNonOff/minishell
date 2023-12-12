@@ -56,6 +56,9 @@ typedef struct s_shell
 
 /* ===================== proto ===================== */
 
+//parsing.c
+void		free_red(t_red *red);
+
 // linked list
 void		*free_list(t_parse *ptr, int option);
 t_parse		*add_parse(t_parse *begin, t_red *red, char **cmd);

@@ -1,16 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nbeaufil <nbeaufil@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/07 10:19:50 by abougy            #+#    #+#             */
-/*   Updated: 2023/12/07 17:02:50 by nbeaufil         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "ra_shell.h"
+#include "minishell.h"
 
 static char	modified_edge(char edge, char c)
 {
@@ -19,27 +7,17 @@ static char	modified_edge(char edge, char c)
 	return (c);
 }
 
-static int	find_red_type(char *str, int pos)
-{
-	if (str[pos + 1] == '>')
-		return (4);
-	else if (str[pos + 1] == '<')
-		return (2);
-	else if (str[pos] == '>')
-		return (3);
-	else if (str[pos] == '<')
-		return (1);
-	return (0);
-}
 
 char	*extract_token(char *prompt, int *pos)
 {
+	char	c;
 	int		len;
 	char	edge;
-	char	c;
+	char	*token;
 
 	len = 0;
 	edge = ' ';
+	token = NULL;
 	while (prompt && prompt[(*pos) + len])
 	{
 		c = prompt[(*pos) + len];
@@ -52,9 +30,23 @@ char	*extract_token(char *prompt, int *pos)
 	token = malloc(sizeof(char) * (len + 1));
 	if (!token)
 		return (NULL);
-	token = _strncpy(token, &prompt[*pos], len);
+	token = m_strncpy(token, &prompt[*pos], len);
 	(*pos) += len;
 	return (token);
+}
+
+/*
+static int	find_red_type(char *str, int pos)
+{
+	if (str[pos + 1] == '>')
+		return (4);
+	else if (str[pos + 1] == '<')
+		return (2);
+	else if (str[pos] == '>')
+		return (3);
+	else if (str[pos] == '<')
+		return (1);
+	return (0);
 }
 
 char	*modified_token(t_prompt data, char *token, t_red **red)
@@ -100,3 +92,4 @@ void	extract_red(t_red **red, char *str, int *pos)
 	}
 	// tab = _endtab_push(tab, buff);
 }
+*/

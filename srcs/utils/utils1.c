@@ -15,7 +15,7 @@ int	m_strlen(const char *s)
 	return (i);
 }
 
-char	**m_duplicateTab(const char **tab)
+char	**m_duplicateTab(char **tab)
 {
 	int		i;
 	char	**new_tab;

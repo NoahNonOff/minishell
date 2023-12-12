@@ -3,6 +3,7 @@
 bool		parse_check(char *prompt);
 t_parse		*parse(t_shell *data);
 
+void	print_address(t_parse *ll);
 /* ----------------------------------------- */
 
 static int	prompt_check(t_shell *data)
@@ -22,19 +23,21 @@ static int	prompt_check(t_shell *data)
 	return (0);
 }
 
+
 int	running(t_shell *data)
 {
-	t_parse	*parse;
+	t_parse	*cmds;
 
 	if (prompt_check(data))
 		return (0);
 	add_history(data->prompt);
 	if (!parse_check(data->prompt))
 		return (0);
-	parse = parse(data);
+	cmds = parse(data);
 
-	printf("%s\n", data->prompt);
-	free_list(parse, 0);
+	//printf("%s\n", data->prompt);
+	print_address(cmds);
+	free_list(cmds, 0);
 	free(data->prompt);
 	return (0);
 }

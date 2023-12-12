@@ -1,4 +1,19 @@
-#include "ra_shell.h"
+#include "minishell.h"
+
+/* ================== to remove ================== */
+void	print_address(t_parse *ll)
+{
+	int	i = 0;
+	while (ll)
+	{
+		printf("cmd %d:\n", i++);
+		for (int i = 0; ll->cmds && ll->cmds[i]; i++)
+			printf("[%s] ", ll->cmds[i]);
+		printf("\n");
+		ll = ll->next;
+	}
+}
+/* =============================================== */
 
 void	*free_list(t_parse *ptr, int option)
 {
@@ -8,7 +23,7 @@ void	*free_list(t_parse *ptr, int option)
 	{
 		tmp = ptr->next;
 		free_red(ptr->red);
-		_free_tab(ptr->cmds);
+		m_freeTab(ptr->cmds);
 		free(ptr);
 		ptr = tmp;
 	}
@@ -31,8 +46,9 @@ static t_parse	*new_node(t_red *red, char **cmd)
 	new_node->pipe_type = 0;
 	new_node->list_size = cmd_size;
 	new_node->red = red;
-	new_node->cmd = cmd;
+	new_node->cmds = cmd;
 	new_node->next = NULL;
+	return (new_node);
 }
 
 t_parse	*add_parse(t_parse *begin, t_red *red, char **cmd)
@@ -46,7 +62,7 @@ t_parse	*add_parse(t_parse *begin, t_red *red, char **cmd)
 	while (act->next)
 		act = act->next;
 	new = new_node(red, cmd);
-	if (!new_node)
+	if (!new)
 		return (free_list(begin, 1));
 	act->next = new;
 	return (begin);
