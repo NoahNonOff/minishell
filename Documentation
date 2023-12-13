@@ -1,0 +1,15 @@
+Parsing:
+
+	-> running()			[running.c]
+	-> parse_check()		[check_parse.c]
+	~> parse_preparation()	[???]
+	-> parse()				[parsing.c]
+	-> extract_cmd()		[parsing.c]
+	-> extract_token()		[token.c]
+	-> modified_token()		[token.c]
+
+
+to do:
+	redo check_red() in check_parse.c 'cause [echo a >  ] doesn't launch an error
+	make parse_preparation() to remove the space before the redirections
+	end to code manage_red()

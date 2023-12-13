@@ -1,20 +1,5 @@
 #include "minishell.h"
 
-/* ================== to remove ================== */
-void	print_address(t_parse *ll)
-{
-	int	i = 0;
-	while (ll)
-	{
-		printf("cmd %d:\n", i++);
-		for (int i = 0; ll->cmds && ll->cmds[i]; i++)
-			printf("[%s] ", ll->cmds[i]);
-		printf("\n");
-		ll = ll->next;
-	}
-}
-/* =============================================== */
-
 void	*free_list(t_parse *ptr, int option)
 {
 	t_parse	*tmp;

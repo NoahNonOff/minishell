@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 char	*extract_token(char *prompt, int *pos);
-bool	modified_token(t_shell *data, char **token, t_red **red);
+bool	modified_token(t_shell *data, char **token, t_red *red);
 /* ----------------------------------------- */
 
 void	free_red(t_red *red)
@@ -51,7 +51,7 @@ char	**extract_cmd(t_shell *data, int *pos, t_red **red)
 	while (data->prompt && data->prompt[*pos] && data->prompt[*pos] != '|')
 	{
 		token = extract_token(data->prompt, pos);
-		if (!token || !modified_token(data, &token, red))
+		if (!token || !modified_token(data, &token, *red))
 			return (m_freeTab(cmd));
 		cmd = m_endtabPush(cmd, token);
 		if (!cmd)

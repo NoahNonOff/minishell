@@ -1,5 +1,10 @@
 #include "minishell.h"
 
+char	*find_var(char **env, char *token, int len);
+char	*manage_var(t_shell *data, char	*token);
+char	*manage_red(t_red *red, char *token);
+/* ----------------------------------------- */
+
 typedef struct s_var
 {
 	int		idx;
@@ -7,11 +12,9 @@ typedef struct s_var
 	char	new_token[TOKEN_MAX_SZ];
 }	t_var;
 
-char	*manage_var(t_shell *data, char	*token);
-char	*find_var(char **env, char *token, int len);
 /* ----------------------------------------- */
 
-static char	modified_edge(char edge, char c)
+char	modified_edge(char edge, char c)
 {
 	if (edge == c)
 		return (' ');
@@ -45,7 +48,7 @@ char	*extract_token(char *prompt, int *pos)
 	return (token);
 }
 
-bool	modified_token(t_shell *data, char **token, t_red **red)
+bool	modified_token(t_shell *data, char **token, t_red *red)
 {
 	char	*str;
 
@@ -54,7 +57,10 @@ bool	modified_token(t_shell *data, char **token, t_red **red)
 	free(*token);
 	if (!str)
 		return (false);
-	// modified for remove red (< | >)
+	// *token = manage_red(red, str);
+	// free(str);
+	// if (!(*token))
+	// 	return (false);
 	*token = str;
 	return (true);
 }
@@ -84,7 +90,7 @@ static int	get_var_name(t_shell *data, t_var *var, char *token)
 	return (len - 1);
 }
 
-char	*manage_var(t_shell *data, char	*token)
+char	*manage_var(t_shell *data, char *token)
 {
 	int		i;
 	t_var	var;

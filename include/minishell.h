@@ -32,6 +32,7 @@
 
 /* ===================== struct ==================== */
 
+// Executable struct
 typedef struct s_redirection
 {
 	char	**input1; // 1

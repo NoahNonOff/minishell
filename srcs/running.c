@@ -2,9 +2,37 @@
 
 bool		parse_check(char *prompt);
 t_parse		*parse(t_shell *data);
-
-void		print_address(t_parse *ll);
 /* ----------------------------------------- */
+
+/* ================== to remove ================== */
+void	print_red(char **red, int i)
+{
+	printf("red[%d]=", i);
+	if (!red)
+		printf("NULL");
+	else
+		for (int j = 0; red && red[j]; j++)
+			printf("[%s] ", red[j]);
+	printf("\n");
+}
+
+void	print_address(t_parse *ll)
+{
+	int	idx = 0;
+	while (ll)
+	{
+		printf("cmd %d:\n", idx++);
+		for (int i = 0; ll->cmds && ll->cmds[i]; i++)
+			printf("[%s] ", ll->cmds[i]);
+		printf("\n");
+		print_red(ll->red->input1, 1);
+		print_red(ll->red->input2, 2);
+		print_red(ll->red->output1, 3);
+		print_red(ll->red->output2, 4);
+		ll = ll->next;
+	}
+}
+/* =============================================== */
 
 static int	prompt_check(t_shell *data)
 {
