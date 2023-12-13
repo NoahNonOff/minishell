@@ -10,6 +10,5 @@ Parsing:
 
 
 to do:
-	redo check_red() in check_parse.c 'cause [echo a >  ] doesn't launch an error
 	make parse_preparation() to remove the space before the redirections
 	end to code manage_red()
