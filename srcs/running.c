@@ -51,20 +51,49 @@ static int	prompt_check(t_shell *data)
 	return (0);
 }
 
+static void	parse_prep(t_shell *data)
+{
+	int		i;
+	int		idx;
+	int		red;
+	char	ret[PROMPT_MAX_SZ];
 
-int	running(t_shell *data)
+	i = -1;
+	idx = 0;
+	red = 0;
+	m_bzero(&ret, PROMPT_MAX_SZ);
+	while (data->prompt && data->prompt[++i])
+	{
+		if (data->prompt[i] == '<' || data->prompt[i] == '>')
+			red = 1;
+		else if (data->prompt[i] != ' ' && data->prompt[i] != '<'
+			&& data->prompt[i] != '>')
+			red = 0;
+		if (m_isWhitespace(data->prompt[i]) && red)
+			continue ;
+		ret[idx++] = data->prompt[i];
+	}
+	free(data->prompt);
+	data->prompt = m_strdup(ret);
+}
+
+// true = quit the program | false = stay in the loop
+bool	running(t_shell *data)
 {
 	t_parse	*cmds;
 
 	if (prompt_check(data))
-		return (0);
+		return (false);
 	add_history(data->prompt);
 	if (!parse_check(data->prompt))
-		return (0);
+		return (false);
+	parse_prep(data);
+	if (!data->prompt)
+		return (true);
 	cmds = parse(data);
 
 	print_address(cmds);
 	free_list(cmds, 0);
 	free(data->prompt);
-	return (0);
+	return (false);
 }

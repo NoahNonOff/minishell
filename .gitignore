@@ -2,5 +2,3 @@
 *.o
 # exclude binary
 minishell
-#eclude the test file
-test.c

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int		running(t_shell *data);
+bool	running(t_shell *data);
 /* ----------------------------------------- */
 
 void	handle_signal(int signo)

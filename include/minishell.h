@@ -20,6 +20,7 @@
 # endif
 
 # define TOKEN_MAX_SZ 508
+# define PROMPT_MAX_SZ 1016
 
 # ifndef _BOOL_
 #  define _BOOL_

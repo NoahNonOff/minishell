@@ -10,5 +10,4 @@ Parsing:
 
 
 to do:
-	make parse_preparation() to remove the space before the redirections
 	end to code manage_red()
