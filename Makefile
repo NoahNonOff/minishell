@@ -10,6 +10,7 @@ SRC =	$(DIR)main.c						\
 		$(UTILS_DIR)utils4.c				\
 		$(PARSE_DIR)check_parse.c			\
 		$(PARSE_DIR)parsing.c				\
+		$(PARSE_DIR)parsing_utils.c			\
 		$(PARSE_DIR)token.c					\
 		$(PARSE_DIR)token_ext.c				\
 		$(PARSE_DIR)linked_list.c			\

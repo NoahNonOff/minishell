@@ -68,9 +68,12 @@ typedef struct s_shell
 
 /* ===================== proto ===================== */
 
+// parsing_utils.c
+char		modified_edge(char edge, char c);
 void		free_red(t_red *red);
-void		set_tVar(t_var *var);
+void		t_varInit(t_var *var);
 
+// linked_list.c
 void		*free_list(t_parse *ptr, int option);
 t_parse		*add_parse(t_parse *begin, t_red *red, char **cmd);
 void		assign_pipe_type(t_parse *parse);

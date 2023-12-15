@@ -5,13 +5,6 @@ char	*manage_var(t_shell *data, char	*token);
 char	*manage_red(t_red *red, char *token);
 /* ----------------------------------------- */
 
-char	modified_edge(char edge, char c)
-{
-	if (edge == c)
-		return (' ');
-	return (c);
-}
-
 char	*extract_token(char *prompt, int *pos)
 {
 	char	c;
@@ -90,7 +83,7 @@ char	*manage_var(t_shell *data, char *token)
 	t_var	var;
 
 	i = -1;
-	set_tVar(&var);
+	t_varInit(&var);
 	while (token[++i] && var.idx < TOKEN_MAX_SZ)
 	{
 		if (token[i] == '\"' || token[i] == '\'')

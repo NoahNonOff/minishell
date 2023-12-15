@@ -1,9 +1,5 @@
 #include "minishell.h"
 
-char	modified_edge(char edge, char c);
-/* ----------------------------------------- */
-
-// bug: {$U -> nbeaufil}
 char	*find_var(char **env, char *token, int len)
 {
 	int		i;
@@ -86,7 +82,7 @@ char	*manage_red(t_red *red, char *token)
 	t_var	var;
 
 	i = -1;
-	set_tVar(&var);
+	t_varInit(&var);
 	while (++i < m_strlen(token) && var.idx < TOKEN_MAX_SZ)
 	{
 		if (token[i] == '\"' || token[i] == '\'')

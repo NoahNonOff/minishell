@@ -4,22 +4,6 @@ char	*extract_token(char *prompt, int *pos);
 bool	modified_token(t_shell *data, char **token, t_red *red);
 /* ----------------------------------------- */
 
-void	free_red(t_red *red)
-{
-	m_freeTab(red->input1);
-	m_freeTab(red->input2);
-	m_freeTab(red->output1);
-	m_freeTab(red->output2);
-	free(red);
-}
-
-void	set_tVar(t_var *var)
-{
-	var->idx = 0;
-	var->edge = ' ';
-	m_bzero(&var->new_token[0], TOKEN_MAX_SZ);
-}
-
 static bool	t_redInit(t_red **red)
 {
 	if (!red)
