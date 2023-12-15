@@ -2,6 +2,7 @@
 
 bool		parse_check(char *prompt);
 t_parse		*parse(t_shell *data);
+void		run(t_parse *begin_cmd, t_shell *data);
 /* ----------------------------------------- */
 
 /* ================== to remove ================== */
@@ -91,8 +92,11 @@ bool	running(t_shell *data)
 	if (!data->prompt)
 		return (true);
 	cmds = parse(data);
-
+	assign_pipe_type(cmds);
+	run(cmds, data);
+	/* ============== */
 	print_address(cmds);
+	/* ============== */
 	free_list(cmds, 0);
 	free(data->prompt);
 	return (false);

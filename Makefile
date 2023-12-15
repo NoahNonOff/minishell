@@ -1,6 +1,7 @@
 DIR = ./srcs/
 UTILS_DIR = $(DIR)/utils/
 PARSE_DIR = $(DIR)/parsing/
+EXEC_DIR = $(DIR)/execution/
 
 SRC =	$(DIR)main.c						\
 		$(DIR)running.c						\
@@ -14,6 +15,7 @@ SRC =	$(DIR)main.c						\
 		$(PARSE_DIR)token.c					\
 		$(PARSE_DIR)token_ext.c				\
 		$(PARSE_DIR)linked_list.c			\
+		$(EXEC_DIR)execution.c				\
 
 
 CC = gcc
@@ -31,7 +33,9 @@ OBJ = $(SRC:.c=.o)
 all : $(NAME)
 
 leaks: $(NAME)
-	valgrind --suppressions=./valgrind_ignore_leaks.txt --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --show-mismatched-frees=yes --read-var-info=yes ./minishell
+	valgrind --suppressions=./.valgrind_ignore_leaks.txt --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --show-mismatched-frees=yes --read-var-info=yes ./minishell
+
+# echo >>ra >te >rge <wrth <<EOF arg1 >rth"w"$USER"erg"'   g' $?
 
 $(NAME) : $(OBJ)
 	$(CC) $(FLAG) -o $(NAME) $(OBJ) -lreadline
@@ -47,5 +51,3 @@ re : fclean all
 .PHONY : minishell clean fclean re
 
 .SILENT:
-
-# echo >>ra >te >rge <wrth <<EOF arg1 >rth"w"$USER"erg"'   g' $?

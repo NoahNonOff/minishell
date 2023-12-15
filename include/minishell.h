@@ -2,14 +2,11 @@
 # define MINISHELL_H
 
 /* ==================== include ==================== */
-# include <stdio.h>
-# include <readline/readline.h>
+# include <readline/readline.h> /* readline() */
 # include <readline/history.h>
-# include <signal.h>
-# include <sys/wait.h>
-# include <sys/types.h>
-# include <dirent.h>
-# include <fcntl.h>
+# include <stdio.h> /* debug printf */
+# include <stdbool.h> /* bool */
+# include <signal.h> /* signal() */
 
 # include "utils.h"
 
@@ -22,14 +19,6 @@
 # define TOKEN_MAX_SZ 508
 # define PROMPT_MAX_SZ 1016
 
-# ifndef _BOOL_
-#  define _BOOL_
-
-#  define bool int
-#  define true 1
-#  define false 0
-
-# endif
 
 /* ===================== struct ==================== */
 
