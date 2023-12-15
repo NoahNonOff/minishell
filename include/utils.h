@@ -26,6 +26,7 @@ char	*m_itoa(int n);
 char	**m_split(char const *s, char c);
 
 // utils 4
+int		m_tablen(char **tab);
 char	**m_endtabPush(char **tab, const char *to_add);
 
 #endif

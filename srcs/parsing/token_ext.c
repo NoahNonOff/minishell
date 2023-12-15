@@ -8,13 +8,11 @@ char	*find_var(char **env, char *token, int len)
 
 	i = -1;
 	ret = NULL;
-	printf("token=%s, len=%d\n", token, len);
 	while (!ret && env && env[++i])
 	{
 		split_env = m_split(env[i], '=');
 		if (!split_env)
 			return (NULL);
-		//printf("split_env[0]=%s\nm_strncmp(split_env[0], token, len)=%d\n", split_env[0], m_strncmp(split_env[0], token, len));
 		if (!m_strncmp(split_env[0], token, len))
 			ret = m_strdup(split_env[1]);
 		m_freeTab(split_env);

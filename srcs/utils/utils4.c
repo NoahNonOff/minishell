@@ -1,6 +1,6 @@
 #include "utils.h"
 
-static int	m_tablen(char **tab)
+int	m_tablen(char **tab)
 {
 	int	i;
 
@@ -16,7 +16,7 @@ char	**m_endtabPush(char **tab, const char *to_add)
 	char	**ret;
 
 	len = 0;
-	if (!to_add || !m_strlen(to_add))
+	if (!to_add)
 		return (tab);
 	ret = malloc(sizeof(char *) * (m_tablen(tab) + 2));
 	if (!ret)
