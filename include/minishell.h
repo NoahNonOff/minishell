@@ -33,6 +33,13 @@
 
 /* ===================== struct ==================== */
 
+typedef struct s_var
+{
+	int		idx;
+	char	edge;
+	char	new_token[TOKEN_MAX_SZ];
+}	t_var;
+
 // Executable struct
 typedef struct s_redirection
 {
@@ -61,10 +68,9 @@ typedef struct s_shell
 
 /* ===================== proto ===================== */
 
-//parsing.c
 void		free_red(t_red *red);
+void		set_tVar(t_var *var);
 
-// linked list
 void		*free_list(t_parse *ptr, int option);
 t_parse		*add_parse(t_parse *begin, t_red *red, char **cmd);
 void		assign_pipe_type(t_parse *parse);

@@ -10,7 +10,7 @@ static bool	nothing_after(const char *prompt, int code)
 	if (code)
 	{
 		if (!prompt[i] || prompt[i] == '|'
-			|| prompt[i] == '<' || prompt[i] == '>')
+			|| ((prompt[i] == '<' || prompt[i] == '>') && i))
 			return (true);
 	}
 	else

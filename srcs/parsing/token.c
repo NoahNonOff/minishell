@@ -5,15 +5,6 @@ char	*manage_var(t_shell *data, char	*token);
 char	*manage_red(t_red *red, char *token);
 /* ----------------------------------------- */
 
-typedef struct s_var
-{
-	int		idx;
-	char	edge;
-	char	new_token[TOKEN_MAX_SZ];
-}	t_var;
-
-/* ----------------------------------------- */
-
 char	modified_edge(char edge, char c)
 {
 	if (edge == c)
@@ -52,16 +43,19 @@ bool	modified_token(t_shell *data, char **token, t_red *red)
 {
 	char	*str;
 
-	(void)red;
 	str = manage_var(data, *token);
 	free(*token);
 	if (!str)
 		return (false);
-	// *token = manage_red(red, str);
-	// free(str);
-	// if (!(*token))
-	// 	return (false);
-	*token = str;
+	*token = manage_red(red, str);
+	free(str);
+	if (!(*token))
+		return (false);
+	if (!m_strlen(*token))
+	{
+		free(*token);
+		*token = NULL;
+	}
 	return (true);
 }
 
@@ -81,7 +75,7 @@ static int	get_var_name(t_shell *data, t_var *var, char *token)
 		len = 2;
 	}
 	else
-		replace = find_var(data->env, &token[1], len);
+		replace = find_var(data->env, &token[1], len - 1);
 	if (!replace)
 		return (len - 1);
 	m_strncpy(&var->new_token[var->idx], replace, m_strlen(replace));
@@ -95,9 +89,8 @@ char	*manage_var(t_shell *data, char *token)
 	int		i;
 	t_var	var;
 
-	m_bzero(&var, sizeof(t_var));
-	var.edge = ' ';
 	i = -1;
+	set_tVar(&var);
 	while (token[++i] && var.idx < TOKEN_MAX_SZ)
 	{
 		if (token[i] == '\"' || token[i] == '\'')

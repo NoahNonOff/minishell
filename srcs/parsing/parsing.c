@@ -13,15 +13,11 @@ void	free_red(t_red *red)
 	free(red);
 }
 
-static bool	error_in_parsing(t_red *red, char **cmd)
+void	set_tVar(t_var *var)
 {
-	if (!red || !cmd)
-	{
-		free_red(red);
-		m_freeTab(cmd);
-		return (true);
-	}
-	return (false);
+	var->idx = 0;
+	var->edge = ' ';
+	m_bzero(&var->new_token[0], TOKEN_MAX_SZ);
 }
 
 static bool	t_redInit(t_red **red)
@@ -54,6 +50,7 @@ char	**extract_cmd(t_shell *data, int *pos, t_red **red)
 		if (!token || !modified_token(data, &token, *red))
 			return (m_freeTab(cmd));
 		cmd = m_endtabPush(cmd, token);
+		free(token);
 		if (!cmd)
 			return (m_freeTab(cmd));
 		while (data->prompt[*pos] && m_isWhitespace(data->prompt[*pos]))
@@ -77,8 +74,6 @@ t_parse	*parse(t_shell *data)
 	{
 		red = NULL;
 		cmd = extract_cmd(data, &pos, &red);
-		if (error_in_parsing(red, cmd))
-			return (free_list(begin, 1));
 		begin = add_parse(begin, red, cmd);
 	}
 	return (begin);
