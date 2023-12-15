@@ -8,6 +8,7 @@ char	*find_var(char **env, char *token, int len)
 
 	i = -1;
 	ret = NULL;
+	printf("%s[%d]\n", token, len);
 	while (!ret && env && env[++i])
 	{
 		split_env = m_split(env[i], '=');
