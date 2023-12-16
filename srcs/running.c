@@ -93,10 +93,10 @@ bool	running(t_shell *data)
 		return (true);
 	cmds = parse(data);
 	assign_pipe_type(cmds);
-	run(cmds, data);
 	/* ============== */
 	print_address(cmds);
 	/* ============== */
+	run(cmds, data);
 	free_list(cmds, 0);
 	free(data->prompt);
 	return (false);
