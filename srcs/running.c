@@ -17,7 +17,7 @@ void	print_red(char **red, int i)
 	printf("\n");
 }
 
-void	print_address(t_parse *ll)
+void	print_list(t_parse *ll)
 {
 	int	idx = 0;
 	while (ll)
@@ -35,6 +35,7 @@ void	print_address(t_parse *ll)
 }
 /* =============================================== */
 
+// check for readline() errors
 static int	prompt_check(t_shell *data)
 {
 	if (isatty(0) && isatty(2))
@@ -52,6 +53,7 @@ static int	prompt_check(t_shell *data)
 	return (0);
 }
 
+// remove space before redirection { > or < }
 static void	parse_prep(t_shell *data)
 {
 	int		i;
@@ -78,7 +80,10 @@ static void	parse_prep(t_shell *data)
 	data->prompt = m_strdup(ret);
 }
 
-// true = quit the program | false = stay in the loop
+/* 
+	The running() function will call all different functions 
+	needed for the parsing and the execution
+*/
 bool	running(t_shell *data)
 {
 	t_parse	*cmds;
@@ -94,7 +99,7 @@ bool	running(t_shell *data)
 	cmds = parse(data);
 	assign_pipe_type(cmds);
 	/* ============== */
-	print_address(cmds);
+	print_list(cmds);
 	/* ============== */
 	run(cmds, data);
 	free_list(cmds, 0);

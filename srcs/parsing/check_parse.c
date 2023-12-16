@@ -19,6 +19,7 @@ static bool	nothing_after(const char *prompt, int code)
 	return (false);
 }
 
+// check the pipes
 static bool	check_pipe(const char *prompt, int i)
 {
 	int	len;
@@ -34,6 +35,7 @@ static bool	check_pipe(const char *prompt, int i)
 	return (true);
 }
 
+// check the redirections
 static bool	check_red(const char *prompt, int *i)
 {
 	bool	status;
@@ -57,6 +59,7 @@ static bool	check_red(const char *prompt, int *i)
 	return (status);
 }
 
+// looks at the char to call the correct verification function
 static bool	check_c(const char *prompt, int *i, char *edge)
 {
 	if (*edge == prompt[*i])
@@ -70,6 +73,7 @@ static bool	check_c(const char *prompt, int *i, char *edge)
 	return (true);
 }
 
+// check error from quotes, redirections, and pipe
 bool	parse_check(const char *prompt)
 {
 	int		i;

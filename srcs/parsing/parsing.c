@@ -19,6 +19,7 @@ static bool	t_redInit(t_red **red)
 	return (true);
 }
 
+// this function aims to extract the commands (multiple tokens)
 char	**extract_cmd(t_shell *data, int *pos, t_red **red)
 {
 	char	**cmd;
@@ -44,6 +45,7 @@ char	**extract_cmd(t_shell *data, int *pos, t_red **red)
 	return (cmd);
 }
 
+// It check if an errors occurs during the parsing
 static bool	check_extract_error(char **cmd, t_red *red)
 {
 	if (!red || !cmd)
@@ -56,6 +58,10 @@ static bool	check_extract_error(char **cmd, t_red *red)
 	return (true);
 }
 
+/*
+	this function create the linked list by extracting
+	a string array, and a structure for the redirections
+*/
 t_parse	*parse(t_shell *data)
 {
 	int		pos;

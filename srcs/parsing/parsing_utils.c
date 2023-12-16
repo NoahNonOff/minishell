@@ -42,6 +42,7 @@ static int	count_empty(char **tab)
 	return (tablen - ret);
 }
 
+// remove empty string in an array of string
 char	**tabRemoveEmpty(char **cmd)
 {
 	int		i;

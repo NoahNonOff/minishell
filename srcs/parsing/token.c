@@ -5,6 +5,7 @@ char	*manage_var(t_shell *data, char	*token);
 char	*manage_red(t_red *red, char *token);
 /* ----------------------------------------- */
 
+// extract a token (from *pos to pipe or space)
 char	*extract_token(char *prompt, int *pos)
 {
 	char	c;
@@ -32,6 +33,10 @@ char	*extract_token(char *prompt, int *pos)
 	return (token);
 }
 
+/*
+	this function transforms the token by replacing $ with
+	the corresponding variable and removing redirections
+*/
 bool	modified_token(t_shell *data, char **token, t_red *red)
 {
 	char	*str;
@@ -52,6 +57,7 @@ bool	modified_token(t_shell *data, char **token, t_red *red)
 	return (true);
 }
 
+// find the variable name (ex: $PATH -> PATH)
 static int	get_var_name(t_shell *data, t_var *var, char *token)
 {
 	int		len;
@@ -77,6 +83,7 @@ static int	get_var_name(t_shell *data, t_var *var, char *token)
 	return (len - 1);
 }
 
+// Transform $ by the corresponding variable
 char	*manage_var(t_shell *data, char *token)
 {
 	int		i;

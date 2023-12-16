@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+// find if the variable exist in env 
 char	*find_var(char **env, char *token, int len)
 {
 	int		i;
@@ -21,6 +22,7 @@ char	*find_var(char **env, char *token, int len)
 	return (ret);
 }
 
+// find the type of redirection
 static int	get_red_type(char *token)
 {
 	if (token[1] == '>')
@@ -33,6 +35,7 @@ static int	get_red_type(char *token)
 		return (1);
 }
 
+// add the file name to the t_red struct
 static void	add_red(t_red *red, int type, char *fileName)
 {
 	if (type == 1)
@@ -45,6 +48,7 @@ static void	add_red(t_red *red, int type, char *fileName)
 		red->output2 = m_endtabPush(red->output2, fileName);
 }
 
+// get the file name
 static int	get_red(t_red *red, char *token)
 {
 	int		i;
@@ -73,7 +77,7 @@ static int	get_red(t_red *red, char *token)
 	return (i);
 }
 
-// remove the redirection and the quotes
+// remove the redirection and the quotes of the token
 char	*manage_red(t_red *red, char *token)
 {
 	int		i;
