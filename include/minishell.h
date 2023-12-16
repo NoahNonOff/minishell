@@ -53,9 +53,13 @@ typedef struct s_shell
 	char	*prompt;
 	char	**env;
 	int		ret_value;
+	t_parse	*begin_list; // to free in child proc
 }	t_shell;
 
 /* ===================== proto ===================== */
+
+// main.c
+void		free_shell(t_shell *data);
 
 // parsing_utils.c
 char		modified_edge(char edge, char c);

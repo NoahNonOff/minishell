@@ -3,6 +3,15 @@
 bool	running(t_shell *data);
 /* ----------------------------------------- */
 
+static void	init_data(t_shell *data, char *env[])
+{
+	data->env = m_duplicateTab(env);
+	if (!data->env)
+		exit (1);
+	data->ret_value = 0;
+	data->begin_list = NULL;
+}
+
 void	handle_signal(int signo)
 {
 	if (signo == SIGINT)
@@ -14,18 +23,11 @@ void	handle_signal(int signo)
 	}
 }
 
-static void	init_data(t_shell *data, char *env[])
-{
-	data->env = m_duplicateTab(env);
-	if (!data->env)
-		exit (1);
-	data->ret_value = 0;
-}
-
-static void	end_prog(t_shell *data)
+void	free_shell(t_shell *data)
 {
 	free(data->prompt);
 	m_freeTab(data->env);
+	free_list(data->begin_list, 0);
 }
 
 int	main(int ac, char *av[], char *env[])
@@ -42,6 +44,6 @@ int	main(int ac, char *av[], char *env[])
 		if (running(&data))
 			break ;
 	}
-	end_prog(&data);
+	free_shell(&data);
 	return (0);
 }

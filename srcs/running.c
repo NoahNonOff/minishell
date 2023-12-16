@@ -2,7 +2,7 @@
 
 bool		parse_check(char *prompt);
 t_parse		*parse(t_shell *data);
-void		run(t_parse *begin_cmd, t_shell *data);
+void		execList(t_shell *data);
 /* ----------------------------------------- */
 
 /* ================== to remove ================== */
@@ -101,8 +101,10 @@ bool	running(t_shell *data)
 	/* ============== */
 	print_list(cmds);
 	/* ============== */
-	run(cmds, data);
+	data->begin_list = cmds;
+	execList(data);
 	free_list(cmds, 0);
 	free(data->prompt);
+	data->begin_list = NULL;
 	return (false);
 }
