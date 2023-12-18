@@ -18,7 +18,7 @@ void	execList(t_shell *data)
 	fd_in = 0;
 	cmd = data->begin_list;
 	if (!cmd->pipe_type)
-		launch(cmd, data);
+		data->ret_value = launch(cmd, data);
 	else
 	{
 		while (cmd)
